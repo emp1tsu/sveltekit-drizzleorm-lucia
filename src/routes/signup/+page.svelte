@@ -21,7 +21,7 @@
 <form
 	class="bg-base-200 flex justify-center items-center flex-col max-w-sm mx-auto mt-20 py-6 rounded-lg"
 	use:enhance={handleSubmit}
-	action="?/login"
+	action="?/register"
 	method="post"
 >
 	<div class="form-control w-full max-w-xs">
@@ -31,6 +31,7 @@
 		</label>
 		<input
 			type="text"
+			autocomplete="off"
 			placeholder="Username"
 			class="input input-bordered w-full max-w-xs"
 			name="username"
@@ -45,6 +46,7 @@
 		</label>
 		<input
 			type="text"
+			autocomplete="off"
 			placeholder="Password"
 			class="input input-bordered w-full max-w-xs"
 			name="password"
@@ -56,13 +58,7 @@
 		{#if isLoadingSignIn}
 			<span class="loading loading-spinner loading-sm" />
 		{:else}
-			ログイン
+			新規登録
 		{/if}
 	</button>
-
-	<p class="pt-4">
-		アカウントをお持ちでないですか？ <a href="/signup" class="link link-hover font-semibold"
-			>新規登録</a
-		>
-	</p>
 </form>

@@ -7,12 +7,6 @@ export const user = mysqlTable('auth_user', {
 	// other user attributes
 	username: varchar('username', {
 		length: 55
-	}),
-	names: varchar('names', {
-		length: 255
-	}),
-	lastNames: varchar('last_names', {
-		length: 255
 	})
 });
 
@@ -22,7 +16,9 @@ export const session = mysqlTable('user_session', {
 	}).primaryKey(),
 	userId: varchar('user_id', {
 		length: 15
-	}).notNull(),
+	})
+		.notNull()
+		.references(() => user.id),
 	activeExpires: bigint('active_expires', {
 		mode: 'number'
 	}).notNull(),
@@ -45,4 +41,16 @@ export const key = mysqlTable('user_key', {
 	})
 });
 
-// Note: PlanetScale does not support foreign keys, that's why the references() method is commented out.
+export const todo = mysqlTable('todo', {
+	id: varchar('id', {
+		length: 48
+	}).primaryKey(),
+	userId: varchar('user_id', {
+		length: 15
+	})
+		.notNull()
+		.references(() => user.id),
+	name: varchar('name', {
+		length: 255
+	}).notNull()
+});

@@ -6,7 +6,6 @@ import { z } from 'zod';
 import { superValidate } from 'sveltekit-superforms/server';
 
 export const load = (async ({ locals }) => {
-	// let's get the session from the locals
 	const session = await locals.auth.validate();
 
 	if (!session) {
@@ -32,16 +31,12 @@ export const actions = {
 		}
 		try {
 			const key = await auth.useKey('username', form.data.username, form.data.password);
-			// console.log({key})
 
-			// to create a session we need the pass the userId which is the id of the user in the database
 			const session = await auth.createSession({
 				userId: key.userId,
 				attributes: {}
 			});
-			// console.log({session});
 
-			// now let's set the session so we can get the session everywhere in server like this page
 			locals.auth.setSession(session);
 		} catch (error) {
 			console.error(error);

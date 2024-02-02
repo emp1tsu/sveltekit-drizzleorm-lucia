@@ -17,8 +17,6 @@ declare namespace Lucia {
 	// we omit the id property because lucia automatically generate it for us when we create a user
 	type DatabaseUserAttributes = {
 		username: string;
-		names: string;
-		last_names: string;
 	};
-	type DatabaseSessionAttributes = {};
+	type DatabaseSessionAttributes = object;
 }

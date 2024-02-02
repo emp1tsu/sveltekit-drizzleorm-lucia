@@ -1,13 +1,61 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
+	import { applyAction, enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
+
+	export let data;
+	console.log(data);
+
+	let isLoadingCreateTodo = false;
+
+	const handleSubmit: SubmitFunction = () => {
+		isLoadingCreateTodo = true;
+
+		return async ({ result }) => {
+			console.log(result);
+			if (result.type === 'failure') {
+				isLoadingCreateTodo = false;
+				return;
+			}
+			isLoadingCreateTodo = false;
+			await applyAction(result);
+		};
+	};
 </script>
 
-<h1 class="text-5xl my-4 font-semibold">If you are seeing this means that you're authenticated!</h1>
+<h1 class="text-5xl my-4 font-semibold">こんにちは。{data.user.username}さん</h1>
 <h2>Welcome to SvelteKit</h2>
-<p>
-	Visit <a href="https://kit.svelte.dev" class="link">kit.svelte.dev</a> to read the documentation
-</p>
 
 <form action="?/logout" method="post" use:enhance>
 	<button class="btn btn-error" type="submit">Logout</button>
 </form>
+
+<form
+	class="bg-base-200 flex justify-center items-center flex-col max-w-sm mx-auto mt-20 py-6 rounded-lg"
+	use:enhance={handleSubmit}
+	action="?/createTodo"
+	method="post"
+>
+	<div class="form-control w-full max-w-xs">
+		<input
+			type="text"
+			placeholder="create todo"
+			class="input input-bordered w-full max-w-xs"
+			name="name"
+			required
+		/>
+	</div>
+
+	<button class="btn mt-4 max-w-xs btn-primary" type="submit" disabled={isLoadingCreateTodo}>
+		{#if isLoadingCreateTodo}
+			<span class="loading loading-spinner loading-sm" />
+		{:else}
+			追加
+		{/if}
+	</button>
+</form>
+
+<ul>
+	{#each data.todos as todo}
+		<li>{todo.name}</li>
+	{/each}
+</ul>
