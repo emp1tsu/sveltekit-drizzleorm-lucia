@@ -1,4 +1,5 @@
-import { mysqlTable, bigint, varchar } from 'drizzle-orm/mysql-core';
+import { sql } from 'drizzle-orm';
+import { mysqlTable, bigint, varchar, timestamp } from 'drizzle-orm/mysql-core';
 
 export const user = mysqlTable('auth_user', {
 	id: varchar('id', {
@@ -52,5 +53,6 @@ export const todo = mysqlTable('todo', {
 		.references(() => user.id),
 	name: varchar('name', {
 		length: 255
-	}).notNull()
+	}).notNull(),
+	createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`)
 });

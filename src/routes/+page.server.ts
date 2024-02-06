@@ -14,7 +14,8 @@ export const load = async ({ locals }: ServerLoadEvent) => {
 	const todos = await db
 		.select({ name: todo.name })
 		.from(todo)
-		.where(eq(todo.userId, session.user.userId));
+		.where(eq(todo.userId, session.user.userId))
+		.orderBy(todo.createdAt, 'desc');
 
 	return { todos, user: session.user };
 };
