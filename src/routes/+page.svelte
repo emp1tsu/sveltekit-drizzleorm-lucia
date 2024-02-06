@@ -24,8 +24,7 @@
 	};
 </script>
 
-<h1 class="text-5xl my-4 font-semibold">こんにちは。{data.user.username}さん</h1>
-<h2>Welcome to SvelteKit</h2>
+<!-- <h1 class="text-5xl my-4 font-semibold">こんにちは。{data.user.username}さん</h1> -->
 
 <form
 	class="bg-base-200 flex justify-center items-center flex-col max-w-sm mx-auto mt-20 py-6 rounded-lg"
